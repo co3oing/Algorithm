@@ -1,3 +1,4 @@
 # Algorithm
 
-[Source](https://github.com/co3oing/BOJ/tree/master/Source)
+[Programmers](https://github.com/co3oing/BOJ/tree/master/Programmers)
+[BOJ](https://github.com/co3oing/BOJ/tree/master/BOJ)
