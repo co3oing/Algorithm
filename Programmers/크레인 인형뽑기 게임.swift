@@ -3,7 +3,6 @@ import Foundation
 func solution(_ board:[[Int]], _ moves:[Int]) -> Int {
     var copiedBoard = board
     var basket: [Int] = []
-    var basketIndex: Int = 0
     var doll: Int = 0
     var result: Int = 0
 
