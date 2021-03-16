@@ -6,8 +6,6 @@ func solution(_ board:[[Int]], _ moves:[Int]) -> Int {
     var doll: Int = 0
     var result: Int = 0
 
-    print(moves)
-
     for move in moves {
         for i in 0..<board.count {
             doll = copiedBoard[i][move - 1]
