@@ -13,7 +13,7 @@ func dfs(_ N:Int, _ number:Int, _ countN:Int, _ resultN:Int, _ result: inout Int
         return
     }
     
-    if number == resultN && (countN < result || result == -1) {
+    if number == resultN && (result == -1 || countN < result) {
         result = countN
         return
     }
