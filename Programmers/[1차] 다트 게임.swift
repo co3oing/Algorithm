@@ -1,57 +1,35 @@
-import Foundation
-
 func solution(_ dartResult:String) -> Int {
-    let result = dartResult.getArrayAfterRegex(regex: "[0-9]+[S|D|T][*|#]?")
-    var score: [Int] = Array(repeating: 0, count: result.count)
+    let numberArr = dartResult.split(whereSeparator: {$0.isLetter || $0 == "*" || $0 == "#"}).map{ Int($0) ?? 0 }
+    let letterArr = dartResult.split(whereSeparator: {$0.isNumber}).map{ String($0) }
+    var answer = 0
     
-    for i in 0..<result.count {
-        let separatedResult = result[i].getArrayAfterRegex(regex: "[0-9]+|[S|D|T]|[*|#]")
-        let currentScore = separatedResult[0]
+    for (i, (number, letter)) in zip(numberArr, letterArr).enumerated() {
+        var score = calculatedScore(number, letter)
         
-        switch separatedResult[1] {
-        case "S":
-            score[i] = Int(currentScore)!
-            break
-        case "D":
-            score[i] = Int(currentScore)! * Int(currentScore)!
-            break
-        case "T":
-            score[i] = Int(currentScore)! * Int(currentScore)! * Int(currentScore)!
-            break
-        default:
-            break
+        if i + 1 < letterArr.count && letterArr[i + 1].contains("*") {
+            score *= 2
         }
-                
-        if separatedResult.count > 2 {
-            if separatedResult[2] == "*" {
-                if i > 0 {
-                    score[i - 1] = score[i - 1] * 2
-                    score[i] = score[i] * 2
-                } else {
-                    score[i] = score[i] * 2
-                }
-            } else if separatedResult[2] == "#" {
-                score[i] = -score[i]
-            }
-        }
+        print(score)
+        answer += score
     }
-        
-    return score.map{$0}.reduce(0, +)
+    
+    return answer
 }
 
-extension String{
-    func getArrayAfterRegex(regex: String) -> [String] {
-        
-        do {
-            let regex = try NSRegularExpression(pattern: regex)
-            let results = regex.matches(in: self,
-                                        range: NSRange(self.startIndex..., in: self))
-            return results.map {
-                String(self[Range($0.range, in: self)!])
-            }
-        } catch let error {
-            print("invalid regex: \(error.localizedDescription)")
-            return []
-        }
+func calculatedScore(_ number: Int, _ letter: String) -> Int {
+    var score = number
+    
+    if letter.contains("D") {
+        score *= score
+    } else if letter.contains("T") {
+        score *= score * score
     }
+    
+    if letter.contains("*") {
+        score *= 2
+    } else if letter.contains("#") {
+        score = -score
+    }
+    
+    return score
 }
