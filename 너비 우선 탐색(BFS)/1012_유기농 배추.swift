@@ -7,7 +7,7 @@ for _ in 0..<T {
     let K = line[2]
 
     var map = Array(repeating: Array(repeating: false, count: M), count: N)
-    var stack: [[Int]] = []
+    var queue: [[Int]] = []
     var count = 0
 
 
@@ -22,8 +22,8 @@ for _ in 0..<T {
         for i in 0..<N {
             for j in 0..<M {
                 if map[i][j] {
-                    stack.append([i, j])
-                    dfs()
+                    queue.append([i, j])
+                    bfs()
                     count += 1
                 }
             }
@@ -32,9 +32,9 @@ for _ in 0..<T {
     }
 
 
-    func dfs() {
+    func bfs() {
         while stack != [] {
-            let arr = stack.remove(at: 0)
+            let arr = queue.remove(at: 0)
             let i = arr[0]
             let j = arr[1]
             
@@ -45,16 +45,16 @@ for _ in 0..<T {
             map[i][j] = false
             
             if i > 0 && map[i - 1][j] {
-                stack.append([i - 1, j])
+                queue.append([i - 1, j])
             }
             if i < N - 1 && map[i + 1][j] {
-                stack.append([i + 1, j])
+                queue.append([i + 1, j])
             }
             if j > 0 && map[i][j - 1] {
-                stack.append([i, j - 1])
+                queue.append([i, j - 1])
             }
             if j < M - 1 && map[i][j + 1] {
-                stack.append([i, j + 1])
+                queue.append([i, j + 1])
             }
         }
     }
