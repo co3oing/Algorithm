@@ -15,7 +15,6 @@ func solution(_ n:Int, _ computers:[[Int]]) -> Int {
 func dfs(_ n: Int, _ computers: [[Int]], _ node: Int, _ visit: inout [Bool]) {
     visit[node] = true
     for i in 0..<n where computers[node][i] == 1 {
-        let targetNode = computers[node][i]
         if !visit[i] {
             dfs(n, computers, i, &visit)
         }
